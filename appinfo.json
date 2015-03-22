@@ -4,12 +4,12 @@
         ""
     ],
     "companyName": "nate.walck@gmail.com",
-    "longName": "Triforce Time",
+    "longName": "Triforce",
     "projectType": "native",
     "resources": {
         "media": [
             {
-                "file": "images/no_litter_crop.png",
+                "file": "images/battery100_cropped.png",
                 "name": "IMAGE_BATTERYTEST",
                 "type": "png"
             }

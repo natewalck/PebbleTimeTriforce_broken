@@ -9,8 +9,8 @@
 
 #include "pebble.h"
 
-static Window *s_main_window;
-static Layer *s_image_layer;
+static Window *s_main_window;:%
+static Layer *s_battery_layer;
 static GBitmap *s_image;
 
 static void layer_update_callback(Layer *layer, GContext* ctx) {
@@ -32,16 +32,16 @@ static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(s_main_window);
   GRect bounds = layer_get_frame(window_layer);
 
-  s_image_layer = layer_create(bounds);
-  layer_set_update_proc(s_image_layer, layer_update_callback);
-  layer_add_child(window_layer, s_image_layer);
+  s_battery_layer = layer_create(bounds);
+  layer_set_update_proc(s_battery_layer, layer_update_callback);
+  layer_add_child(window_layer, s_battery_layer);
 
   s_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BATTERYTEST);
 }
 
 static void main_window_unload(Window *window) {
   gbitmap_destroy(s_image);
-  layer_destroy(s_image_layer);
+  layer_destroy(s_battery_layer);
 }
 
 static void init() {
