@@ -1,0 +1,26 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "nate.walck@gmail.com",
+    "longName": "Triforce Time",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/no_litter_crop.png",
+                "name": "IMAGE_BATTERYTEST",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Triforce Time",
+    "uuid": "5fff6bb0-cd07-419c-8310-99a9c246bba5",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
