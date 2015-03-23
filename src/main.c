@@ -27,7 +27,7 @@ static void layer_update_callback(Layer *layer, GContext* ctx) {
   GSize image_size = s_battery_image->bounds.size;
 #endif
 
-  graphics_draw_bitmap_in_rect(ctx, s_battery_image, GRect(23, 84, image_size.w, image_size.h));
+  graphics_draw_bitmap_in_rect(ctx, s_battery_image, GRect(23, 85, image_size.w, image_size.h));
 }
 
 static void main_window_load(Window *window) {
