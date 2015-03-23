@@ -51,7 +51,7 @@ static void main_window_load(Window *window) {
 
   int time_text_y = bg_header_size + (bg_window_size / 2) - (time_max_size.h / 2) - textlayer_padding;
 
-  s_time_layer = text_layer_create(GRect(7, time_text_y, 132, 88));
+  s_time_layer = text_layer_create(GRect(7, 10, 132, 88));
   text_layer_set_background_color(s_time_layer, GColorBlack);
   text_layer_set_text_color(s_time_layer, GColorWhite);
   text_layer_set_text(s_time_layer, "00:00");
