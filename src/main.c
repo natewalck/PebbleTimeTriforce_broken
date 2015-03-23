@@ -11,7 +11,7 @@
 
 static Window *s_main_window;
 static Layer *s_battery_layer;
-static Layer *s_time_layer;
+static TextLayer *s_time_layer;
 static GBitmap *s_battery_image;
 
 static GFont s_time_font;
@@ -40,34 +40,32 @@ static void main_window_load(Window *window) {
 
   s_battery_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BATTERYTEST);
 
-  s_time_layer = layer_create(bounds);
+  s_time_font = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
+  // Figure out dimensions for Time Layer
+  GSize time_max_size = graphics_text_layout_get_content_size("00:00", s_time_font, GRect(7, 41, 132, 88), GTextOverflowModeWordWrap , GTextAlignmentCenter);
+  //   // Debugging
+  //   APP_LOG(APP_LOG_LEVEL_INFO , "Max Layer Height is %i", time_max_size.h);
+  //   APP_LOG(APP_LOG_LEVEL_INFO , "Max Layer Width is %i", time_max_size.w);
+
+  // Background Image section sizes
+  int bg_header_size = 5;
+  int bg_window_size = 88;
+
+  // Default textlayer padding value
+  int textlayer_padding = 5;
+
+  int time_text_y = bg_header_size + (bg_window_size / 2) - (time_max_size.h / 2) - textlayer_padding;
+
+  s_time_layer = text_layer_create(GRect(7, time_text_y, 132, 88));
   text_layer_set_background_color(s_time_layer, GColorBlack);
   text_layer_set_text_color(s_time_layer, GColorWhite);
   text_layer_set_text(s_time_layer, "00:00");
-  // Create GFont for Time Layer
-  s_time_font = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
-    //Apply to TextLayer
+
+  //Apply to TextLayer
   text_layer_set_font(s_time_layer, s_time_font);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 
-  layer_add_child(window_layer, s_time_layer);
-}
-
-static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-  update_time();
-
-  // // Get weather update every 30 minutes
-  // if(tick_time->tm_min % 30 == 0) {
-  //   // Begin dictionary
-  //   DictionaryIterator *iter;
-  //   app_message_outbox_begin(&iter);
-
-  //   // Add a key-value pair
-  //   dict_write_uint8(iter, 0, 0);
-
-  //   // Send the message!
-  //   app_message_outbox_send();
-  // }
+  layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
 }
 
 static void update_time() {
@@ -97,6 +95,22 @@ static void update_time() {
   // text_layer_set_text(s_date_layer, date_text);
 }
 
+static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
+  update_time();
+
+  // // Get weather update every 30 minutes
+  // if(tick_time->tm_min % 30 == 0) {
+  //   // Begin dictionary
+  //   DictionaryIterator *iter;
+  //   app_message_outbox_begin(&iter);
+
+  //   // Add a key-value pair
+  //   dict_write_uint8(iter, 0, 0);
+
+  //   // Send the message!
+  //   app_message_outbox_send();
+  // }
+}
 
 static void main_window_unload(Window *window) {
   gbitmap_destroy(s_battery_image);
