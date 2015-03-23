@@ -23,22 +23,17 @@ static void layer_update_callback(Layer *layer, GContext* ctx) {
 
 #ifdef PBL_PLATFORM_BASALT
   GSize image_size = gbitmap_get_bounds(s_battery_image).size;
-#else 
+#else
   GSize image_size = s_battery_image->bounds.size;
 #endif
 
-  graphics_draw_bitmap_in_rect(ctx, s_battery_image, GRect(5, 5, image_size.w, image_size.h));
+  graphics_draw_bitmap_in_rect(ctx, s_battery_image, GRect(23, 84, image_size.w, image_size.h));
 }
 
 static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(s_main_window);
   GRect bounds = layer_get_frame(window_layer);
 
-  s_battery_layer = layer_create(bounds);
-  layer_set_update_proc(s_battery_layer, layer_update_callback);
-  layer_add_child(window_layer, s_battery_layer);
-
-  s_battery_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BATTERYTEST);
 
   s_time_font = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
   // Figure out dimensions for Time Layer
@@ -66,6 +61,12 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
+
+  s_battery_layer = layer_create(bounds);
+  layer_set_update_proc(s_battery_layer, layer_update_callback);
+  layer_add_child(window_layer, s_battery_layer);
+
+  s_battery_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BATTERYTEST);
 }
 
 static void update_time() {
@@ -121,6 +122,7 @@ static void main_window_unload(Window *window) {
 
 static void init() {
   s_main_window = window_create();
+  window_set_background_color(s_main_window, GColorBlack);
   window_set_window_handlers(s_main_window, (WindowHandlers) {
     .load = main_window_load,
     .unload = main_window_unload,
